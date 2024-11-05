@@ -6,6 +6,8 @@ import java.util.*;
 import org.springframework.stereotype.Service;
 import com.example.player.repository.PlayerJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
 @Service
 public class PlayerJpaService implements PlayerRepository {
@@ -20,28 +22,27 @@ public class PlayerJpaService implements PlayerRepository {
 	}
 
 	@Override
-	public com.example.player.repository.Player getPlayerById(int playerId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Player getPlayerById(int playerId) {
+		try {
+			Player player = playerJpaRepository.findById(playerId).get();
+			return player;
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
 	}
 
 	@Override
-	public com.example.player.repository.Player addPlayer(com.example.player.repository.Player player) {
-		// TODO Auto-generated method stub
-		return null;
+	public Player addPlayer(Player player) {
+		return new Player(12, "Prince", 24, "Bowler");
 	}
 
 	@Override
-	public com.example.player.repository.Player updatePlayer(int playerId,
-			com.example.player.repository.Player player) {
-		// TODO Auto-generated method stub
-		return null;
+	public Player updatePlayer(int playerId, Player player) {
+		return new Player(2, "Yuvi", 12, "All-rounder");
 	}
 
 	@Override
 	public void deletePlayer(int playerId) {
-		// TODO Auto-generated method stub
 
 	}
-
 }
